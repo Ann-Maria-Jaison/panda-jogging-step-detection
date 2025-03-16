@@ -45,21 +45,22 @@
         let stepsDisplay = document.getElementById("steps");
         let messageDisplay = document.getElementById("message");
         let warningDisplay = document.getElementById("warning");
+        let lastY = null;
+        let threshold = 2.5; // Adjust sensitivity for step detection
 
         if ('DeviceMotionEvent' in window) {
             window.addEventListener('devicemotion', function(event) {
                 let acceleration = event.accelerationIncludingGravity;
-                let totalAcceleration = Math.sqrt(
-                    acceleration.x * acceleration.x + 
-                    acceleration.y * acceleration.y + 
-                    acceleration.z * acceleration.z
-                );
                 
-                if (totalAcceleration > 15) { // Threshold for detecting steps
-                    stepCount++;
-                    stepsDisplay.textContent = stepCount;
-                    panda.style.transform = `translateX(${stepCount * 5}px)`;
+                if (lastY !== null) {
+                    let deltaY = Math.abs(acceleration.y - lastY);
+                    if (deltaY > threshold) { // Detect only vertical movements
+                        stepCount++;
+                        stepsDisplay.textContent = stepCount;
+                        panda.style.transform = `translateX(${stepCount * 5}px)`;
+                    }
                 }
+                lastY = acceleration.y;
                 
                 if (stepCount > 50) {
                     messageDisplay.textContent = "You've walked as much as a panda climbing a tree! 🌳";
