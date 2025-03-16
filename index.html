@@ -5,44 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panda Steps Counter</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
         body {
             text-align: center;
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
+            font-family: 'Press Start 2P', cursive;
+            background: black;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
         h1 {
-            color: #333;
+            color: rgb(29, 77, 20);
+            font-size: 50px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px rgb(28, 29, 29), 0 0 10px rgb(32, 44, 44), 0 0 15px rgb(5, 54, 24);
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid rgb(11, 15, 15);
+            width: 0;
+            animation: typing 3s steps(20, end) infinite alternate, blink 0.5s step-end infinite;
         }
-        .panda {
-            width: 100px;
-            transition: transform 0.2s;
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
         }
         .container {
-            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgb(31, 85, 45);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 400px;
+            margin: 10px;
+        }
+        .panda {
+            width: 120px;
+            transition: transform 0.2s ease-in-out;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
         .counter {
             font-size: 24px;
             margin-top: 20px;
+            font-weight: bold;
+            color: rgb(25, 68, 28);
+            text-shadow: 0 0 5px rgb(4, 15, 4);
         }
         .warning {
             color: red;
             font-size: 14px;
             margin-top: 10px;
         }
+        .sections {
+            display: flex;
+            gap: 20px;
+        }
     </style>
 </head>
 <body>
-    <h1>🐼 Panda Steps Counter 🐾</h1>
-    <div class="container">
-        <img src="https://i.imgur.com/NxQHqIY.png" alt="Panda" class="panda" id="panda">
-        <div class="counter">Steps: <span id="steps">0</span></div>
-        <p id="message"></p>
-        <p class="warning" id="warning"></p>
+    <h1>Panda Steps Counter</h1>
+    <div class="sections">
+        <div class="container">
+            <img src="panda.png" alt="Panda" class="panda" id="panda">
+            <h2>My Steps</h2>
+            <div class="counter">Steps: <span id="human-steps">0</span></div>
+            <br><h2>Panda Steps</h2>
+            <div class="counter">Panda Steps: <span id="panda-steps">0</span></div>
+        </div>
     </div>
+    <p id="message"></p>
+    <p class="warning" id="warning"></p>
     <script>
-        let stepCount = 0;
+        let humanStepCount = 0;
+        let pandaStepCount = 0;
         let panda = document.getElementById("panda");
-        let stepsDisplay = document.getElementById("steps");
+        let humanStepsDisplay = document.getElementById("human-steps");
+        let pandaStepsDisplay = document.getElementById("panda-steps");
         let messageDisplay = document.getElementById("message");
         let warningDisplay = document.getElementById("warning");
         let lastY = null;
@@ -55,14 +110,19 @@
                 if (lastY !== null) {
                     let deltaY = Math.abs(acceleration.y - lastY);
                     if (deltaY > threshold) { // Detect only vertical movements
-                        stepCount++;
-                        stepsDisplay.textContent = stepCount;
-                        panda.style.transform = `translateX(${stepCount * 5}px)`;
+                        humanStepCount++;
+                        pandaStepCount = Math.floor(humanStepCount / 2.5);
+                        humanStepsDisplay.textContent = humanStepCount;
+                        pandaStepsDisplay.textContent = pandaStepCount;
+                        panda.style.transform = `translateY(-10px)`;
+                        setTimeout(() => {
+                            panda.style.transform = `translateY(0)`;
+                        }, 150);
                     }
                 }
                 lastY = acceleration.y;
                 
-                if (stepCount > 50) {
+                if (pandaStepCount > 50) {
                     messageDisplay.textContent = "You've walked as much as a panda climbing a tree! 🌳";
                 }
             });
