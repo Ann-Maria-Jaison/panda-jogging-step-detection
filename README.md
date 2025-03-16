@@ -22,8 +22,8 @@ A floating panda animation reacts to movement, making the experience engaging. I
 
 
 ## 🎮 How to Use
-1. Open the app on a mobile device (motion sensors required).
-2. Start moving, and the app will count your steps.
+1. Open the webpage on a mobile device (motion sensors required).
+2. Start moving, and it will count your steps.
 3. Watch the panda move as you walk!
 4. Track both **Human Steps** and **Panda Steps**.
 5. Reach 50 panda steps for a surprise message! 🎉
