@@ -1,4 +1,4 @@
-# Panda Steps Counter
+# Happy National Panda Day(March 16) 🐼
 
 ## 📌 Overview
 The **Panda Steps Counter** is a fun and interactive motion-based web app that tracks your steps using your device's motion sensor and converts them into "panda steps." The app consists of two sections:
