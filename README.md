@@ -40,7 +40,4 @@ A floating panda animation reacts to movement, making the experience engaging. I
 ## 🤝 Contributions
 Feel free to fork the repository and improve the project! PRs are welcome. 😊
 
-## 📄 License
-This project is open-source and available under the **MIT License**.
-
 Enjoy your panda steps adventure! 🐾🎉
